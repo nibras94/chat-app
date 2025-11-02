@@ -2,9 +2,13 @@ const express = require("express");
 const app = express();
 const http = require("http").createServer(app);
 const io = require("socket.io")(http);
+const path = require("path");
+
+// اجعل السيرفر يخدم ملفات ثابتة (مثل index.html)
+app.use(express.static(path.join(__dirname)));
 
 app.get("/", (req, res) => {
-  res.send("Chat server running!");
+  res.sendFile(path.join(__dirname, "index.html"));
 });
 
 io.on("connection", (socket) => {
